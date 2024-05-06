@@ -1,116 +1,71 @@
-# Build a REST API with AWS Lambda, API Gateway, and DynamoDB
 
-This guide will walk you through setting up a REST API using AWS Lambda, API Gateway, and DynamoDB, with logging managed through Amazon CloudWatch. The API will support CRUD operations (Create, Read, Update, Delete) on inventory items.
+# Terraform Project Setup
 
-## Architecture Diagram
-![Architecture Diagram](dynamoFlux_api.png)
+Welcome to the Terraform project setup guide. This document will help you clone the project from GitHub, initialize Terraform, and manage your infrastructure efficiently.
 
 ## Prerequisites
-- AWS account with appropriate permissions to create and manage Lambda, API Gateway, DynamoDB, and CloudWatch resources.
-- Basic knowledge of Python programming.
 
-## Step 2: Create a DynamoDB Table
+Ensure you have the following tools installed before proceeding:
+- [Git](https://git-scm.com/downloads) - For version control and cloning the repository.
+- [Terraform](https://www.terraform.io/downloads.html) - For infrastructure automation.
 
-### 2.1 Open DynamoDB Service
-- Log in to the AWS Management Console and navigate to the DynamoDB service.
+## Setup Instructions
 
-### 2.2 Create a New Table
-- Click on "Create table".
-- Enter a `Table name` (e.g., `inventory_info`) and a `Primary key` (e.g., `inventoryId` of type String).
-- Use the default settings for the rest and click "Create".
+### Cloning the Repository
 
-## Step 3: Create an IAM Role for Lambda Function
+Begin by cloning the repository to get the necessary Terraform configuration files:
 
-### 3.1 Navigate to IAM Service
-- Open the IAM service in the AWS Console.
+1. Open a terminal.
+2. Execute the following command to clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/yourrepository.git
+   ```
+   *Note: Replace `yourusername/yourrepository` with the actual path to your GitHub repository.*
 
-### 3.2 Create a New Role
-- Select "Roles" from the sidebar and click "Create role".
-- Choose "AWS service" as the type of trusted entity, and select "Lambda" as the service that will use this role.
-- Attach policies like `AmazonDynamoDBFullAccess`, `AWSLambdaBasicExecutionRole`, and `CloudWatchFullAccess`.
-- Name the role and create it.
+3. Navigate to the project directory:
+   ```bash
+   cd yourrepository
+   ```
 
-## Step 4: Create a Lambda Function for CRUD Operations
+### Initializing Terraform
 
-### 4.1 Open Lambda Service
-- Go to the Lambda service in the AWS Console.
+Initialize Terraform to install the required plugins and prepare your environment:
 
-### 4.2 Create a New Lambda Function
-- Click "Create function".
-- Choose "Author from scratch".
-- Enter a function name.
-- Select Python 3.x as the runtime.
-- Choose the IAM role created in Step 3.
-- Click "Create function".
+```bash
+terraform init
+```
 
-### 4.3 Add the Python Code
-- In the function code editor, paste the Python code provided for handling various HTTP methods and paths to provide CRUD functionalities on inventory items.
+This command should be run in the directory containing your Terraform configuration files (`*.tf`).
 
-## Step 5: Set Up API Gateway
+### Configuring Terraform
 
-### 5.1 Navigate to API Gateway Service
-- Open API Gateway in the AWS Console.
+Edit the Terraform configuration files as necessary:
+- `main.tf` - Main configuration file.
+- `variables.tf` - Defines variables used throughout the configuration.
+- `outputs.tf` - Defines output values.
 
-### 5.2 Create a New API
-- Choose "REST API" and click "Build".
-- Select "New API" and fill in the API name.
-- Click "Create API".
+### Running Terraform
 
-### 5.3 Define Resources and Methods
+To see the planned changes and apply them to your infrastructure, use the following commands:
 
-#### Status Check
-- **Resource**: `/status`
-  - **GET**: Used to check the operational status of the API. This method should be integrated with a Lambda function that returns a simple message indicating that the service is operational.
+- **Plan** - Generate and show the execution plan:
+  ```bash
+  terraform plan
+  ```
+- **Apply** - Apply the changes required to reach the desired state of the configuration:
+  ```bash
+  terraform apply
+  ```
 
-#### Inventory Resource
-- **Resource**: `/inventory`
-  - **GET**: Retrieves a specific inventory item by ID. Ensure this is integrated with the appropriate Lambda function that handles GET requests for an individual item.
-  - **POST**: Adds a new inventory item. Link this method to the Lambda function that processes POST requests to create new items.
-  - **PATCH**: Updates an existing inventory item. This should be connected to the Lambda function that handles modifications to items.
-  - **DELETE**: Deletes an inventory item by ID. Integrate this with the Lambda function designed to handle DELETE requests.
+### Cleaning Up
 
-#### Inventories Resource
-- **Resource**: `/inventories`
-  - **GET**: Retrieves all inventory items. This should be linked to the Lambda function that handles fetching multiple inventory records at once.
+To remove all resources managed by Terraform, execute:
 
-#### Inventory Search
-- **Resource**: `/inventory/search`
-  - **GET**: Provides search functionality to find inventory items based on various criteria like name or category. Make sure this method is integrated with a Lambda function that can handle query parameters and return filtered results.
+```bash
+terraform destroy
+```
 
-#### Inventory History
-- **Resource**: `/inventory/history`
-  - **GET**: Retrieves the history of changes made to a specific inventory item. This should connect to a Lambda function that can pull historical data for an item.
+## Additional Resources
 
-#### Bulk Operations
-- **Resource**: `/inventory/bulk`
-  - **POST**: Allows the bulk insertion or update of multiple inventory items at once. Link this to a Lambda function designed to handle batch processing of inventory data.
-
-### Resource Integration
-For each resource and method:
-- Go to the Amazon API Gateway console.
-- Select your API and navigate to the Resources panel.
-- Choose the resource or create a new one by clicking "Create Resource".
-- Add methods by selecting the resource, clicking "Create Method", and then selecting the appropriate HTTP method.
-- Configure each method to integrate with the corresponding AWS Lambda function:
-  - Choose "Lambda Function" for the integration type.
-  - Enter the name of the Lambda function that should handle the request.
-  - Ensure the correct deployment stage and region are selected.
-  - Save and deploy the changes to make them effective.
-
-### Deployment
-- After setting up all resources and methods, make sure to deploy your API:
-  - Navigate to "Stages" in the API Gateway console.
-  - Select your stage or create a new one.
-  - Click on "Deploy API" to update the stage with the latest changes.
-
-This expanded setup ensures that your API Gateway is fully equipped to handle a variety of operations essential for managing inventory as well as providing operational status feedback.
-
-## Step 6: Enable Logging with CloudWatch
-
-### 6.1 Modify the API Gateway Settings
-- In API Gateway, go to "Stages".
-- Select the stage you want to enable logging for.
-- Under the "Logs/Tracing" tab, enable CloudWatch logging.
-
-### 6.2 View Logs in CloudWatch
-- Navigate to the CloudWatch service to view the logs generated by API requests.
+- [Terraform Documentation](https://www.terraform.io/docs)
+- [Git Documentation](https://git-scm.com/doc)
