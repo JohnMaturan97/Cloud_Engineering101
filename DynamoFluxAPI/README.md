@@ -3,7 +3,7 @@
 This guide will walk you through setting up a REST API using AWS Lambda, API Gateway, and DynamoDB, with logging managed through Amazon CloudWatch. The API will support CRUD operations (Create, Read, Update, Delete) on inventory items.
 
 ## Architecture Diagram
-![Architecture Diagram](../images/dynamoFlux_api.png)
+![Architecture Diagram](dynamoFlux_api.png)
 
 ## Prerequisites
 - AWS account with appropriate permissions to create and manage Lambda, API Gateway, DynamoDB, and CloudWatch resources.
