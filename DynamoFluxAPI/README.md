@@ -1,4 +1,3 @@
-
 # Terraform Project Setup
 
 Welcome to the Terraform project setup guide. This document will help you clone the project from GitHub, initialize Terraform, and manage your infrastructure efficiently.
